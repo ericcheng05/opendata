@@ -69,18 +69,18 @@ https://opendata.myexample.work/restaurants/index.json
 | `branch` | `string` | Human-readable branch name (e.g. `"Jordan"`, `"Mong Kok"`) |
 | `system` | `string` | Name of the online ordering platform used at this branch |
 | `system_url` | `string` | Homepage of the ordering platform provider |
-| `links` | `BranchLinks` | Named URL shortcuts for this branch |
+| `urls` | `BranchUrls` | Named URL shortcuts for this branch |
 | `dinein_tables` | `DineInTable[]` | Per-table ordering URLs for dine-in QR scanning. `[]` when the branch has no per-table URLs |
 
-### `BranchLinks`
+### `BranchUrls`
 
 All fields are optional — only present when the branch supports that flow.
 
 | Property | Type | Description |
 |---|---|---|
 | `home` | `string` | Landing page for the branch's online menu |
-| `dinein` | `string` | Direct link to the dine-in order mode |
-| `takeaway` | `string` | Direct link to the takeaway order mode |
+| `dinein` | `string` | Direct URL of the dine-in order mode |
+| `takeaway` | `string` | Direct URL of the takeaway order mode |
 
 ### `DineInTable`
 
@@ -98,7 +98,7 @@ All fields are optional — only present when the branch supports that flow.
 | `aigens` | https://www.aigens.com/ | Sukiya | `?mode=dinein&spot={id}` query parameter |
 | `PinMe` | https://www.pin2eat.com/ | Jong Ro Korean Restaurant | `table_name` query parameter |
 | `UCR Technology` | https://www.ucr.com.hk/ | Cafe 100% | Table URL embedded as base64 in the `data` parameter |
-| `鴻智互動` | https://www.cashier.tw/ | Matsuya, Matsunoya | No per-table URLs — branch-level links only |
+| `鴻智互動` | https://www.cashier.tw/ | Matsuya, Matsunoya | No per-table URLs — branch-level URLs only |
 
 ---
 
@@ -116,7 +116,7 @@ All fields are optional — only present when the branch supports that flow.
   "branch": "Jordan",
   "system": "aigens",
   "system_url": "https://www.aigens.com/zh-hant/",
-  "links": {
+  "urls": {
     "home":     "https://food.order.place/home/store/444394119229440",
     "dinein":   "https://food.order.place/order/store/444394119229440/mode/dinein",
     "takeaway": "https://food.order.place/order/store/444394119229440/mode/takeaway"
@@ -137,5 +137,5 @@ const BASE = 'https://opendata.myexample.work';
 const { restaurants } = await fetch(`${BASE}/restaurants/index.json`).then(r => r.json());
 
 const sukiya = await fetch(`${BASE}/restaurants/sukiya.json`).then(r => r.json());
-console.log(sukiya.branches.map(b => `${b.branch}: ${b.links.dinein ?? b.links.home ?? b.links.takeaway}`));
+console.log(sukiya.branches.map(b => `${b.branch}: ${b.urls.dinein ?? b.urls.home ?? b.urls.takeaway}`));
 ```
